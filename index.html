@@ -1003,7 +1003,7 @@ document.querySelectorAll('[data-card]').forEach(card=>{
   });
 });
 // ===== questionnaires =====
-const MAIL_TO="homegroupvzla@gmail.com", WA_LINK="https://wa.me/message/XQEGUO4HSPBPC1";
+const MAIL_TO="homegroupvzla@gmail.com", WA_LINK="https://wa.me/5804244320602";
 function openModal(id){var m=document.getElementById(id);if(m){m.classList.add('show');document.body.style.overflow='hidden';m.querySelector('.modal-panel').scrollTop=0;}}
 function closeModal(m){m.classList.remove('show');document.body.style.overflow='';}
 document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openModal(b.getAttribute('data-open'));});});
@@ -1879,9 +1879,7 @@ window.addEventListener('load',()=>{
         '?subject=' + encodeURIComponent('[HOME by ABBA] ' + subj + (firstName ? ' — ' + firstName : '')) +
         '&body=' + encodeURIComponent(msgBody);
     } else {
-      // WhatsApp: copy to clipboard first so user can paste
-      try { navigator.clipboard.writeText(msgBody); } catch(e) {}
-      window.open('https://wa.me/message/XQEGUO4HSPBPC1', '_blank');
+      window.open('https://wa.me/5804244320602?text=' + encodeURIComponent(msgBody), '_blank');
     }
 
     
@@ -1922,7 +1920,7 @@ window.addEventListener('load',()=>{
           '<p>Tus respuestas ya van de camino a Barbara.' +
           (mode === 'mail'
             ? ' Revisa tu app de correo y envía el mensaje que se preparó.'
-            : ' Abre WhatsApp y envía el mensaje que se preparó automáticamente.') +
+            : ' Abre WhatsApp y presiona Enviar — el mensaje ya está listo con tus respuestas.') +
           '</p>';
         var btn = document.createElement('button');
         btn.className = 'btn';
