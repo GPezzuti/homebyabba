@@ -635,6 +635,7 @@ footer .fl .btn[data-dlguide].dl-wa::before,footer .fl a[data-dlguide].dl-wa::be
 }
 .modal-head { flex-shrink: 0; }
 .modal-body {
+  min-height: 0 !important;
   overflow-y: auto !important;
   flex: 1 1 auto !important;
   max-height: none !important;
@@ -1102,7 +1103,7 @@ window.addEventListener('load',()=>{
 <script>
 (function(){
   // PDF hosted on Google Drive - replace URL below after Barbara uploads the PDF
-  var pdfUrl = "TODO_REPLACE_WITH_GOOGLE_DRIVE_URL";
+  var pdfUrl = "https://drive.google.com/file/d/1JK2_CO_CnNkYNDlGt1raMT7dvJZ0XP1b/view?usp=drivesdk";
   var a = document.getElementById('guideDownload');
   document.querySelectorAll('[data-dlguide]').forEach(function(el){
     el.addEventListener('click', function(e){
@@ -1883,24 +1884,7 @@ window.addEventListener('load',()=>{
       window.open('https://wa.me/message/XQEGUO4HSPBPC1', '_blank');
     }
 
-    // Show success screen
-    setTimeout(function() {
-      var successHtml =
-        '<div class="modal-success">' +
-          '<div class="ms-icon">✓</div>' +
-          '<h3>' + (firstName ? '¡Listo, ' + firstName + '!' : '¡Listo!') + '</h3>' +
-          '<p>Tus respuestas ya van de camino a Barbara.' +
-          (mode === 'wa'
-            ? ' Abre WhatsApp y envía el mensaje que se preparó automáticamente.'
-            : ' Revisa tu app de correo y envía el mensaje.') +
-          '</p>' +
-          '<button class="btn" onclick="var mo=this.closest(\'.modal\');mo.classList.remove(\'show\');document.body.style.overflow=\'\';mo.querySelector(\'.modal-panel\').innerHTML=mo.dataset.origPanel||mo.querySelector(\'.modal-panel\').innerHTML">Cerrar</button>' +
-        '</div>';
-      if (!m.dataset.origPanel) {
-        m.dataset.origPanel = panel.innerHTML;
-      }
-      panel.innerHTML = successHtml;
-    }, 300);
+    
   };
 
   // GPU compositing for parallax elements — apply on DOMContentLoaded
