@@ -623,6 +623,73 @@ footer .fl .btn[data-dlguide].dl-wa::before,footer .fl a[data-dlguide].dl-wa::be
   .avail.avail-urgent .avail-dot{animation:none}
   .amb-glow{display:none}
 }
+
+/* ===== FIX v4: modal sticky footer + rendering + success state ===== */
+
+/* MODAL FIX: header+footer sticky, body scrolls — buttons always visible */
+.modal-panel {
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: min(88vh, 820px) !important;
+  overflow: hidden !important;
+}
+.modal-head { flex-shrink: 0; }
+.modal-body {
+  overflow-y: auto !important;
+  flex: 1 1 auto !important;
+  max-height: none !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+.modal-foot {
+  flex-shrink: 0 !important;
+  position: sticky;
+  bottom: 0;
+  background: var(--porcelain);
+  border-top: 1px solid rgba(26,23,20,.08);
+  z-index: 2;
+}
+
+/* Modal success screen */
+.modal-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 56px 40px 48px;
+  gap: 18px;
+  min-height: 320px;
+}
+.modal-success .ms-icon {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--amber);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: #1A1714; flex-shrink: 0;
+}
+.modal-success h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 380; font-size: 1.85rem;
+  color: var(--ink); line-height: 1.1;
+}
+.modal-success p {
+  color: #5C564C; max-width: 34ch;
+  line-height: 1.65; font-size: .97rem;
+}
+.modal-success .btn { margin-top: 8px; }
+
+/* IMAGE RENDERING: GPU compositing for parallax backgrounds */
+.chapter-bg, .hero-bg, .final-bg {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* PERFORMANCE: font-display swap for embedded fonts */
+@font-face { font-family: 'Fraunces'; font-display: swap; }
+@font-face { font-family: 'Manrope'; font-display: swap; }
 </style></head>
 <body>
 <div class="progress" id="progress"></div>
@@ -1765,6 +1832,84 @@ window.addEventListener('load',()=>{
     });
   });
 
+})();
+</script>
+
+<script>
+/* ===== FIX v4: form success state + origin labeling ===== */
+(function(){
+  // Override sendForm with success state + clearer origin
+  var _orig = window.sendForm;
+  window.sendForm = function(m, mode) {
+    var panel  = m.querySelector('.modal-panel');
+    var head   = m.querySelector('.modal-head');
+    var body   = m.querySelector('.modal-body');
+    var foot   = m.querySelector('.modal-foot');
+    var errEl  = m.querySelector('.form-err');
+
+    // Collect form data (reuse existing collectForm if it exists)
+    var d;
+    try { d = collectForm(m); } catch(e) { d = null; }
+    if (!d) return; // fallback: something went wrong
+
+    if (d.missing) {
+      if (errEl) { errEl.textContent = 'Por favor completa todos los campos obligatorios (*)'; errEl.classList.add('show'); }
+      if (body) body.scrollTop = 0;
+      return;
+    }
+    if (errEl) errEl.classList.remove('show');
+
+    var title     = m.getAttribute('data-title') || 'Consulta';
+    var subj      = m.getAttribute('data-subject') || title;
+    var firstName = (d.name || '').trim().split(' ')[0] || '';
+
+    // Build body string with clear origin
+    var msgLines = [
+      '📋 Formulario: ' + title + ' | HOME by ABBA',
+      '🌐 Origen: homebyabba.com',
+      ''
+    ];
+    if (d.lines && d.lines.length) { msgLines = msgLines.concat(d.lines); msgLines.push(''); }
+    var msgBody = msgLines.join('\n');
+
+    if (mode === 'mail') {
+      window.location.href = 'mailto:homegroupvzla@gmail.com' +
+        '?subject=' + encodeURIComponent('[HOME by ABBA] ' + subj + (firstName ? ' — ' + firstName : '')) +
+        '&body=' + encodeURIComponent(msgBody);
+    } else {
+      // WhatsApp: copy to clipboard first so user can paste
+      try { navigator.clipboard.writeText(msgBody); } catch(e) {}
+      window.open('https://wa.me/message/XQEGUO4HSPBPC1', '_blank');
+    }
+
+    // Show success screen
+    setTimeout(function() {
+      var successHtml =
+        '<div class="modal-success">' +
+          '<div class="ms-icon">✓</div>' +
+          '<h3>' + (firstName ? '¡Listo, ' + firstName + '!' : '¡Listo!') + '</h3>' +
+          '<p>Tus respuestas ya van de camino a Barbara.' +
+          (mode === 'wa'
+            ? ' Abre WhatsApp y envía el mensaje que se preparó automáticamente.'
+            : ' Revisa tu app de correo y envía el mensaje.') +
+          '</p>' +
+          '<button class="btn" onclick="var mo=this.closest(\'.modal\');mo.classList.remove(\'show\');document.body.style.overflow=\'\';mo.querySelector(\'.modal-panel\').innerHTML=mo.dataset.origPanel||mo.querySelector(\'.modal-panel\').innerHTML">Cerrar</button>' +
+        '</div>';
+      if (!m.dataset.origPanel) {
+        m.dataset.origPanel = panel.innerHTML;
+      }
+      panel.innerHTML = successHtml;
+    }, 300);
+  };
+
+  // GPU compositing for parallax elements — apply on DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.chapter-bg, .hero-bg, .final-bg').forEach(function(el) {
+      el.style.willChange = 'transform';
+      el.style.backfaceVisibility = 'hidden';
+      el.style.webkitBackfaceVisibility = 'hidden';
+    });
+  });
 })();
 </script>
 </body></html>
