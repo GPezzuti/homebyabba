@@ -1912,4 +1912,57 @@ window.addEventListener('load',()=>{
   });
 })();
 </script>
+
+<script>
+/* ===== FIX v4b: sendForm wrapper (success overlay, cleaner) ===== */
+(function(){
+  function patchSendForm() {
+    var _orig = window.sendForm;
+    if (!_orig || _orig._patched) return;
+    window.sendForm = function(m, mode) {
+      _orig(m, mode);
+      var err = m.querySelector('.form-err');
+      if (err && err.classList.contains('show')) return; // validation failed — stay on form
+      var panel = m.querySelector('.modal-panel');
+      if (!panel) return;
+      // Build first name from collectForm result
+      var firstName = '';
+      try { var d = collectForm(m); firstName = (d.name||'').trim().split(' ')[0]; } catch(e) {}
+      setTimeout(function() {
+        var ov = document.createElement('div');
+        ov.className = 'modal-success';
+        ov.innerHTML =
+          '<div class="ms-icon">✓</div>' +
+          '<h3>' + (firstName ? '¡Listo, ' + firstName + '!' : '¡Listo!') + '</h3>' +
+          '<p>Tus respuestas ya van de camino a Barbara.' +
+          (mode === 'mail'
+            ? ' Revisa tu app de correo y envía el mensaje que se preparó.'
+            : ' Abre WhatsApp y envía el mensaje que se preparó automáticamente.') +
+          '</p>';
+        var btn = document.createElement('button');
+        btn.className = 'btn';
+        btn.textContent = 'Cerrar';
+        btn.onclick = function() {
+          panel.removeChild(ov);
+          m.classList.remove('show');
+          document.body.style.overflow = '';
+        };
+        ov.appendChild(btn);
+        panel.appendChild(ov);
+        ov.style.position = 'absolute';
+        ov.style.inset = '0';
+        ov.style.background = 'var(--porcelain, #F4EFE7)';
+        ov.style.zIndex = '10';
+        ov.style.borderRadius = 'inherit';
+      }, 350);
+    };
+    window.sendForm._patched = true;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', patchSendForm);
+  } else {
+    patchSendForm();
+  }
+})();
+</script>
 </body></html>
