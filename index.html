@@ -186,7 +186,7 @@ header.solid{background:rgba(20,18,16,.82);backdrop-filter:blur(12px);padding:12
 
 /* FINAL */
 .final{position:relative;min-height:92svh;display:flex;align-items:center;overflow:hidden}
-.final-bg{position:absolute;inset:0;background:url('assets/images/hero.jpg') center/cover no-repeat}
+.final-bg{position:absolute;inset:0;background:url('assets/images/img6572_web.jpg') center/cover no-repeat}
 .final::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,13,11,.92) 30%,rgba(15,13,11,.55))}
 .final-inner{position:relative;z-index:3;padding:0 7vw}
 .final .eyebrow{color:var(--amber-soft)}
@@ -670,12 +670,15 @@ footer .fl .btn[data-dlguide].dl-wa::before,footer .fl a[data-dlguide].dl-wa::be
 .modal-success .btn { margin-top: 8px; }
 
 /* IMAGE RENDERING: GPU compositing for parallax backgrounds */
-.chapter-bg, .hero-bg, .final-bg {
+.hero-bg {
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+}
+.chapter-bg, .final-bg {
+  will-change: background-position;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* PERFORMANCE: font-display swap for embedded fonts */
@@ -1377,29 +1380,6 @@ window.addEventListener('load',()=>{
     });
   });
 
-  /* 13 — INERTIA SMOOTH SCROLL (desktop only, scrollTo-based, scrollY preserved) */
-  safe(function(){
-    if(REDUCE || !FINE || MOBILE) return;
-    if(window.innerWidth<880) return;
-    if(document.body.scrollHeight < window.innerHeight*2.5) return;
-    var target=window.scrollY, current=window.scrollY, animating=false;
-    function clamp(v){ return Math.max(0, Math.min(v, document.documentElement.scrollHeight-window.innerHeight)); }
-    function tick(){
-      current+=(target-current)*0.12;
-      if(Math.abs(target-current)<0.6){ current=target; animating=false; window.scrollTo(0,current); return; }
-      window.scrollTo(0,current);
-      requestAnimationFrame(tick);
-    }
-    window.addEventListener('wheel',function(e){
-      if(e.ctrlKey) return;
-      if(Math.abs(e.deltaY)<2) return;
-      e.preventDefault();
-      target=clamp(target+e.deltaY);
-      if(!animating){ animating=true; current=window.scrollY; requestAnimationFrame(tick); }
-    },{passive:false});
-    window.addEventListener('scroll',function(){ if(!animating){ target=window.scrollY; current=window.scrollY; } },{passive:true});
-    window.addEventListener('keydown',function(){ target=window.scrollY; current=window.scrollY; animating=false; });
-  });
 
 })();
 </script>
@@ -1841,14 +1821,6 @@ window.addEventListener('load',()=>{
     
   };
 
-  // GPU compositing for parallax elements — apply on DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.chapter-bg, .hero-bg, .final-bg').forEach(function(el) {
-      el.style.willChange = 'transform';
-      el.style.backfaceVisibility = 'hidden';
-      el.style.webkitBackfaceVisibility = 'hidden';
-    });
-  });
 })();
 </script>
 
