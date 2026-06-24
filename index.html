@@ -45,7 +45,7 @@ header.solid{background:rgba(20,18,16,.82);backdrop-filter:blur(12px);padding:12
 
 /* HERO */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('assets/images/hero.jpg') center/cover no-repeat;
+.hero-bg{position:absolute;inset:0;background:url('assets/images/terraza6_web.jpg') center/cover no-repeat;
   transform:scale(1.08);animation:kb 18s ease-out forwards}
 @keyframes kb{to{transform:scale(1)}}
 .hero::after{content:'';position:absolute;inset:0;
@@ -416,15 +416,18 @@ h1.serif.wsplit .it-word>span{font-style:italic;color:var(--amber-soft)}
   transition:transform .7s cubic-bezier(.2,.7,.2,1)}
 .uline-h2.uline-in::after{transform:scaleX(1)}
 
+/* ---- 10b · suppress underline on La Promesa h2 ---- */
+.testi-proof .uline-h2::after{display:none}
+
 /* ---- 11 · FLOATING WHATSAPP (bottom-left, below modal) ---- */
 .wa-float{position:fixed;left:20px;bottom:20px;z-index:100;
   width:56px;height:56px;border-radius:50%;display:grid;place-items:center;
-  background:#25D366;color:#fff;text-decoration:none;
-  box-shadow:0 10px 26px -8px rgba(37,211,102,.6),0 2px 6px rgba(0,0,0,.25);
+  background:var(--amber);color:#fff;text-decoration:none;
+  box-shadow:0 10px 26px -8px rgba(194,130,60,.6),0 2px 6px rgba(0,0,0,.25);
   transition:opacity .5s ease,transform .25s ease}
 .wa-float:hover{transform:scale(1.06)}
 .wa-float svg{position:relative;z-index:2}
-.wa-ring{position:absolute;inset:0;border-radius:50%;border:2px solid #25D366;
+.wa-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--amber);
   animation:waPulse 2.4s ease-out infinite}
 @keyframes waPulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.7);opacity:0}100%{opacity:0}}
 
@@ -450,6 +453,7 @@ h1.serif.wsplit .it-word>span{font-style:italic;color:var(--amber-soft)}
 .mbar-wa{background:var(--amber);color:#1A1714}
 .mbar-wa:active{filter:brightness(.95)}
 @media(max-width:768px){.mbar{display:flex}}
+@media(max-width:768px){.chapter-bg{transform:scale(1.03)}}
 /* lift floats while bar is visible so they don't stack at 375px */
 body.mbar-shown .wa-float,body.mbar-shown .sound{bottom:86px}
 
@@ -533,15 +537,6 @@ a,button,.btn,.plus,.card-head,.sidx,.sound,[role="button"]{
   line-height:1.25;margin:0;color:var(--ink);letter-spacing:-.01em}
 .testi.testi-proof .pcard p{font-family:'Manrope';font-size:.92rem;line-height:1.55;
   color:rgba(26,23,20,.66);margin:0}
-.testi.testi-proof .proof-cta{margin-top:2.8rem;text-align:center}
-.testi.testi-proof .proof-cta .ig{display:inline-flex;align-items:center;gap:10px;
-  font-family:'Manrope';font-weight:700;font-size:.95rem;text-decoration:none;color:var(--ink);
-  border:1px solid rgba(26,23,20,.18);border-radius:100px;padding:13px 24px;
-  transition:border-color .25s ease,transform .25s ease,background .25s ease}
-.testi.testi-proof .proof-cta .ig:hover{border-color:var(--amber);background:rgba(194,130,60,.05);transform:translateY(-1px)}
-.testi.testi-proof .proof-cta .ig svg{width:19px;height:19px}
-.testi.testi-proof .proof-cta .sub{display:block;margin-top:12px;font-family:'Manrope';
-  font-size:.8rem;color:rgba(26,23,20,.5)}
 .testi.testi-proof .pcard{opacity:1;transform:none;
   transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
 .testi.testi-proof .pcard.pc-pre{opacity:0;transform:translateY(22px)}
@@ -693,19 +688,13 @@ footer .fl .btn[data-dlguide].dl-wa::before,footer .fl a[data-dlguide].dl-wa::be
 @font-face { font-family: 'Fraunces'; font-display: swap; }
 @font-face { font-family: 'Manrope'; font-display: swap; }
 
-/* ===== PERF + FIREFLIES CSS ===== */
 .hero { position: relative; }
-.hero-canvas {
-  position: absolute; inset: 0;
-  z-index: 1; pointer-events: none;
-  width: 100%; height: 100%;
-}
 .hero-bg  { z-index: 0; }
 .hero-inner { position: relative; z-index: 2; }
 
 /* Chapter bg placeholder while lazy-loading */
 .chapter-bg { background-color: var(--sand, #E5DACB); transition: background-image .4s ease; }
-</style>  <link rel="preload" as="image" href="assets/images/hero.jpg">
+</style>  <link rel="preload" as="image" href="assets/images/terraza6_web.jpg">
   <link rel="preload" as="font" href="assets/fonts/fraunces-400.woff2" crossorigin>
 </head>
 <body>
@@ -1521,10 +1510,6 @@ window.addEventListener('load',()=>{
       +   '<span class="eyebrow">La promesa</span>'
       +   '<h2 class="serif">Una casa que <span class="it">se siente</span>, no solo se ve.</h2>'
       +   '<div class="promise-grid">'+cards+'</div>'
-      +   '<div class="proof-cta">'
-      +     '<a class="ig" href="'+IG_LINK+'" target="_blank" rel="noopener">'+igGlyph+'Mira proyectos reales en @homebyabba</a>'
-      +     '<span class="sub">Espacios reales, antes y después, en el Instagram de Barbara.</span>'
-      +   '</div>'
       + '</div>';
 
     var h2 = $('h2', testi);
@@ -1611,7 +1596,7 @@ window.addEventListener('load',()=>{
   var CFG = {
     // Pega la URL pública del PDF en Google Drive (ej:
     // "https://drive.google.com/file/d/XXXX/view?usp=sharing"). Vacío = botón pide guía por WhatsApp.
-    GUIDE_URL: "",
+    GUIDE_URL: "https://drive.google.com/file/d/1JK2_CO_CnNkYNDlGt1raMT7dvJZ0XP1b/view?usp=drivesdk",
 
     // Endpoint para capturar leads aunque mailto falle (Formspree/Worker).
     // Ej: "https://formspree.io/f/xxxxxxx". Vacío = solo WhatsApp/correo (sin captura silenciosa).
@@ -1652,9 +1637,9 @@ window.addEventListener('load',()=>{
       // Solo reescribimos los que prometen una descarga inexistente.
       if(/descarg/i.test(t)){
         var isFooterLink = !!el.closest('footer');
-        if(isFooterLink){ el.textContent = 'Pídeme la guía'; }
+        if(isFooterLink){ el.textContent = 'Descargar la guía'; }
         else {
-          el.textContent = 'Pídeme la guía por WhatsApp';
+          el.textContent = 'Descargar la guía';
           if(el.classList.contains('btn')) el.classList.add('dl-wa');
         }
       }
@@ -1673,7 +1658,7 @@ window.addEventListener('load',()=>{
     });
     // proxy del mbar (botón "Guía gratis" de la barra sticky) también honesto
     var proxy = $('[data-dlguide-proxy]');
-    if(proxy && !hasGuide){ proxy.textContent = 'Pide la guía'; }
+    if(proxy && !hasGuide){ proxy.textContent = 'Descargar la guía'; }
   });
 
   /* ====================================================================
@@ -1993,7 +1978,7 @@ window.addEventListener('load',()=>{
 
 <script>
 
-/* ===== PERF + FIREFLIES JS ===== */
+/* ===== PERF JS ===== */
 (function(){
 
   /* — Lazy-load chapter backgrounds — */
@@ -2013,88 +1998,6 @@ window.addEventListener('load',()=>{
     });
   }
 
-  /* — Fireflies canvas on hero — */
-  var hero = document.querySelector('.hero');
-  if (!hero) return;
-  var canvas = document.createElement('canvas');
-  canvas.className = 'hero-canvas';
-  canvas.setAttribute('aria-hidden', 'true');
-  hero.insertBefore(canvas, hero.firstChild.nextSibling);
-  var ctx = canvas.getContext('2d');
-  var W = 0, H = 0;
-
-  function resize() {
-    W = canvas.width  = hero.offsetWidth;
-    H = canvas.height = hero.offsetHeight;
-  }
-
-  var COLORS = [
-    [194, 130,  60],   /* amber #C2823C */
-    [217, 168, 101],   /* amber-soft #D9A865 */
-    [255, 210, 140],   /* warm highlight */
-  ];
-
-  function Firefly() {
-    this.reset(true);
-  }
-  Firefly.prototype.reset = function(init) {
-    this.x  = Math.random() * W;
-    this.y  = init ? (Math.random() * H) : (H + 10 + Math.random() * 60);
-    this.r  = 0.8 + Math.random() * 2.2;
-    this.vy = -(0.25 + Math.random() * 0.55);
-    this.vx = (Math.random() - 0.5) * 0.3;
-    this.maxA = 0.35 + Math.random() * 0.45;
-    this.a  = init ? (Math.random() * this.maxA) : 0;
-    this.ph = Math.random() * Math.PI * 2;
-    this.sp = 0.012 + Math.random() * 0.018;
-    this.c  = COLORS[Math.floor(Math.random() * COLORS.length)];
-  };
-  Firefly.prototype.tick = function() {
-    this.ph += this.sp;
-    this.a   = this.maxA * (0.5 + 0.5 * Math.sin(this.ph));
-    this.x  += this.vx + Math.sin(this.ph * 0.4) * 0.25;
-    this.y  += this.vy;
-    if (this.y < -20) { this.reset(false); }
-  };
-  Firefly.prototype.draw = function() {
-    var r = this.r, x = this.x, y = this.y, a = this.a;
-    var c = this.c;
-    /* core dot */
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, 6.283);
-    ctx.fillStyle = 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';
-    ctx.fill();
-    /* soft glow */
-    var g = ctx.createRadialGradient(x, y, 0, x, y, r * 5);
-    g.addColorStop(0, 'rgba('+c[0]+','+c[1]+','+c[2]+','+(a * 0.5)+')');
-    g.addColorStop(1, 'rgba('+c[0]+','+c[1]+','+c[2]+',0)');
-    ctx.beginPath();
-    ctx.arc(x, y, r * 5, 0, 6.283);
-    ctx.fillStyle = g;
-    ctx.fill();
-  };
-
-  var N = 60, flies = [], raf = null;
-  function init() { resize(); flies = []; for (var i=0;i<N;i++) flies.push(new Firefly()); }
-
-  function frame() {
-    ctx.clearRect(0, 0, W, H);
-    for (var i = 0; i < flies.length; i++) { flies[i].tick(); flies[i].draw(); }
-    raf = requestAnimationFrame(frame);
-  }
-
-  /* Pause when hero is off-screen (perf) */
-  if ('IntersectionObserver' in window) {
-    var vis = new IntersectionObserver(function(entries) {
-      if (entries[0].isIntersecting) { if (!raf) raf = requestAnimationFrame(frame); }
-      else { if (raf) { cancelAnimationFrame(raf); raf = null; } }
-    }, { threshold: 0.05 });
-    vis.observe(hero);
-  }
-
-  window.addEventListener('resize', function(){ init(); }, { passive: true });
-  init();
-  raf = requestAnimationFrame(frame);
 
 })();
 </script>
