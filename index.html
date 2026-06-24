@@ -409,15 +409,9 @@ h1.serif.wsplit .it-word>span{font-style:italic;color:var(--amber-soft)}
   .btn-amber:hover{box-shadow:0 14px 30px -14px rgba(194,130,60,.7);transform:translate(var(--mx,0px),var(--my,0px)) translateY(-1px)}
 }
 
-/* ---- 10 · H2 UNDERLINE DRAW-IN ---- */
+/* ---- 10 · H2 UNDERLINE DRAW-IN (disabled) ---- */
 .uline-h2{position:relative;display:inline-block}
-.uline-h2::after{content:"";position:absolute;left:0;bottom:-.12em;height:2px;width:100%;
-  background:var(--amber);transform:scaleX(0);transform-origin:left center;
-  transition:transform .7s cubic-bezier(.2,.7,.2,1)}
-.uline-h2.uline-in::after{transform:scaleX(1)}
-
-/* ---- 10b · suppress underline on La Promesa h2 ---- */
-.testi-proof .uline-h2::after{display:none}
+.uline-h2::after{display:none}
 
 /* ---- 11 · FLOATING WHATSAPP (bottom-left, below modal) ---- */
 .wa-float{position:fixed;left:20px;bottom:20px;z-index:100;
@@ -1217,44 +1211,6 @@ window.addEventListener('load',()=>{
     update();
   });
 
-  /* 5 — STATS BAND (after .reframe) + counter animation */
-  safe(function(){
-    var ref=$('.reframe'); if(!ref || $('.stats')) return;
-    var sec=document.createElement('section');
-    sec.className='stats';
-    sec.innerHTML='<!-- SAMPLE: replace numbers with real data before launch -->'
-      +'<div class="wrap">'
-      +'<span class="eyebrow">Diseño sensorial en Valencia</span>'
-      +'<div class="stats-grid">'
-        +'<div class="stat"><div class="n" data-count="120" data-suffix="+">0</div><div class="lbl">Hogares transformados</div></div>'
-        +'<div class="stat"><div class="n" data-count="5" data-suffix=" años">0</div><div class="lbl">Acompañando familias</div></div>'
-        +'<div class="stat"><div class="n" data-count="97" data-suffix="%">0</div><div class="lbl">Familias que repiten o recomiendan</div></div>'
-        +'<div class="stat"><div class="n" data-count="3" data-suffix="">0</div><div class="lbl">Proyectos nuevos por mes</div></div>'
-      +'</div></div>';
-    ref.parentNode.insertBefore(sec, ref.nextSibling);
-
-    var counters=$$('.stat .n', sec);
-    function animate(el){
-      var target=parseFloat(el.getAttribute('data-count'))||0;
-      var suffix=el.getAttribute('data-suffix')||'';
-      if(REDUCE){ el.textContent=target+suffix; return; }
-      var start=null, dur=1400;
-      function step(ts){
-        if(start===null) start=ts;
-        var p=Math.min((ts-start)/dur,1);
-        var eased=1-Math.pow(1-p,3);
-        el.textContent=Math.round(target*eased)+suffix;
-        if(p<1) requestAnimationFrame(step); else el.textContent=target+suffix;
-      }
-      requestAnimationFrame(step);
-    }
-    if('IntersectionObserver' in window){
-      var io=new IntersectionObserver(function(es){
-        es.forEach(function(e){ if(e.isIntersecting){ animate(e.target); io.unobserve(e.target); } });
-      },{threshold:.5});
-      counters.forEach(function(c){ io.observe(c); });
-    } else { counters.forEach(animate); }
-  });
 
   /* 6 — TESTIMONIALS (before #guia) */
   safe(function(){
