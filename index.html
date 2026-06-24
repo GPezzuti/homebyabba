@@ -45,7 +45,7 @@ header.solid{background:rgba(20,18,16,.82);backdrop-filter:blur(12px);padding:12
 
 /* HERO */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('assets/images/terraza6_web.jpg') center/cover no-repeat;
+.hero-bg{position:absolute;inset:0;background:url('assets/images/img6572_web.jpg') center/cover no-repeat;
   transform:scale(1.08);animation:kb 18s ease-out forwards}
 @keyframes kb{to{transform:scale(1)}}
 .hero::after{content:'';position:absolute;inset:0;
@@ -694,7 +694,7 @@ footer .fl .btn[data-dlguide].dl-wa::before,footer .fl a[data-dlguide].dl-wa::be
 
 /* Chapter bg placeholder while lazy-loading */
 .chapter-bg { background-color: var(--sand, #E5DACB); transition: background-image .4s ease; }
-</style>  <link rel="preload" as="image" href="assets/images/terraza6_web.jpg">
+</style>  <link rel="preload" as="image" href="assets/images/img6572_web.jpg">
   <link rel="preload" as="font" href="assets/fonts/fraunces-400.woff2" crossorigin>
 </head>
 <body>
@@ -1460,7 +1460,7 @@ window.addEventListener('load',()=>{
 
   /* 1: KILL DEAD GUIDE LINK */
   safe(function(){
-    var GUIDE_URL = "";
+    var GUIDE_URL = "https://drive.google.com/file/d/1JK2_CO_CnNkYNDlGt1raMT7dvJZ0XP1b/view?usp=drivesdk";
     function handler(e){
       e.preventDefault();
       if(GUIDE_URL){ window.open(GUIDE_URL,'_blank','noopener'); }
@@ -1867,8 +1867,8 @@ window.addEventListener('load',()=>{
 
     // Build body string with clear origin
     var msgLines = [
-      '📋 Formulario: ' + title + ' | HOME by ABBA',
-      '🌐 Origen: homebyabba.com',
+      'Formulario: ' + title + ' | HOME by ABBA',
+      'Origen: homebyabba.com',
       ''
     ];
     if (d.lines && d.lines.length) { msgLines = msgLines.concat(d.lines); msgLines.push(''); }
