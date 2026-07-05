@@ -1017,13 +1017,13 @@ window.I18N = {
 };
 
 (function(){
-  function T(lang,key){
+  function resolveKey(lang,key){
     var parts=key.split('.'), o=window.I18N[lang];
     for(var i=0;i<parts.length;i++){ if(o==null) break; o=o[parts[i]]; }
     if(o==null) console.warn('[i18n] missing key', lang, key);
     return o;
   }
-  window.T = function(key){ return T(window.LANG||'es', key); };
+  window.T = function(key){ return resolveKey(window.LANG||'es', key); };
 
   window.LANG = (function(){ try{ return localStorage.getItem('abba_lang')||'es'; }catch(e){ return 'es'; } })();
 
