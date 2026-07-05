@@ -21,7 +21,8 @@
 ### Pendiente ⏳
 - [x] PDF URL cargada: https://drive.google.com/file/d/1JK2_CO_CnNkYNDlGt1raMT7dvJZ0XP1b/view — abre en vista previa (no descarga)
 - [x] Dominio homebyabba.com adquirido (2026-06-25)
-- [ ] Conectar homebyabba.com como dominio custom en Cloudflare Pages + DNS
+- [x] Conectar homebyabba.com como dominio custom en Cloudflare Pages + DNS (2026-06-27)
+- [x] Toggle ES/EN + traducción completa del sitio, default español (2026-07-05)
 - [ ] Prueba final de QA (música, WhatsApp, PDF, mobile)
 
 ## Hosting
@@ -35,5 +36,12 @@
 2. Push al repo: `homebyabba-deploy` en scratchpad o directamente en el repo
 3. Cloudflare auto-deploya en ~30 segundos
 
-## Blocker actual
-**Ninguno.** PDF live, dominio adquirido. Siguiente: conectar DNS en Cloudflare Pages.
+## Estado final
+**PROYECTO COMPLETO.** Site live en homebyabba.com. DNS conectado 2026-06-27. QA pendiente (opcional — si Barbara lo pide).
+
+## Toggle ES/EN (2026-07-05)
+- Botón en el header (`#langToggle`) alterna todo el sitio entre español (default) e inglés.
+- Motor de traducción: diccionario `window.I18N` + atributos `data-i18n*` + `setLang()`, todo inline en `index.html`. Persiste la preferencia en `localStorage`.
+- Incluye: copy estático, las 3 modales de formulario (labels, placeholders, chips, selects), mensajes de WhatsApp/correo, widget de sonido, botón flotante de WhatsApp, barra móvil sticky.
+- De paso se corrigió un drift: el commit anterior (PDF preview + labels "Ver") solo había tocado `deliverables/index.html`, nunca `index.html` (el que sirve Cloudflare) — quedó sin desplegar. Ya está aplicado y sincronizado en ambos archivos.
+- Nota: los campos/chips del formulario se envían a Barbara en el idioma que el visitante elija (ES o EN) — ella responde en español siempre, solo cambia el idioma de la pregunta recibida.
