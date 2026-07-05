@@ -42,7 +42,10 @@ header.solid{background:rgba(20,18,16,.82);backdrop-filter:blur(12px);padding:12
 .btn-dark:hover{background:var(--ink2)}
 .nav-cta .btn-link{display:none}
 @media(min-width:760px){.nav-cta .btn-link{display:inline-flex}}
-.lang-toggle{padding:11px 14px;min-width:44px;justify-content:center;font-weight:700;letter-spacing:.04em;font-size:.78rem}
+.lang-toggle{padding:11px 14px;min-width:44px;justify-content:center;font-weight:700;letter-spacing:.04em;font-size:.78rem;
+  background:transparent;-webkit-appearance:none;appearance:none;font-family:'Manrope';outline:none}
+.lang-toggle:hover{background:rgba(244,239,231,.08)}
+.lang-toggle:focus-visible{box-shadow:0 0 0 2px var(--amber-soft)}
 
 /* HERO */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
@@ -1051,10 +1054,10 @@ window.I18N = {
     document.querySelectorAll('[data-i18n-attr-label]').forEach(function(el){
       var v=T(el.getAttribute('data-i18n-attr-label')); if(v!=null) el.setAttribute('data-label', v);
     });
-    if(window.renderHeroH1) window.renderHeroH1(lang);
-    if(window.__refreshSoundLabel) window.__refreshSoundLabel();
     var tgl=document.getElementById('langToggle');
     if(tgl){ tgl.textContent = (lang==='es'?'EN':'ES'); tgl.setAttribute('aria-label', T('toggle.aria')); }
+    try{ if(window.renderHeroH1) window.renderHeroH1(lang); }catch(e){ console.warn('[i18n] renderHeroH1 failed', e); }
+    try{ if(window.__refreshSoundLabel) window.__refreshSoundLabel(); }catch(e){ console.warn('[i18n] refreshSoundLabel failed', e); }
   }
 
   window.setLang = function(lang){
