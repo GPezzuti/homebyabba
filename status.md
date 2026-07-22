@@ -19,7 +19,7 @@
 - [x] Cloudflare Pages deploy: https://homebyabba.gerardopezzuti.workers.dev ✅ LIVE
 
 ### Pendiente ⏳
-- [x] PDF URL cargada: https://drive.google.com/file/d/1JK2_CO_CnNkYNDlGt1raMT7dvJZ0XP1b/view — abre en vista previa (no descarga)
+- [x] PDF URL cargada: https://drive.google.com/file/d/1GgAc8aJGp4_26MPWyTKdHaNojshnFhqn/view — abre en vista previa (no descarga), actualizada 2026-07-22
 - [x] Dominio homebyabba.com adquirido (2026-06-25)
 - [x] Conectar homebyabba.com como dominio custom en Cloudflare Pages + DNS (2026-06-27)
 - [x] Toggle ES/EN + traducción completa del sitio, default español (2026-07-05)
