@@ -310,9 +310,6 @@ footer .fine{font-size:.74rem;color:#6B6358;margin-top:14px;letter-spacing:.04em
 /* z-index map (existing): progress=120 header=110 modal=130 sound=130 sindex=90.
    New: grain=2, wa-float=100, mbar=125, cursor=9999. Floats sit below modal(130). */
 
-/* ---- 0 · LOADING FADE (pure CSS, always completes even if JS dies) ---- */
-@keyframes abbaPageFade{from{opacity:0}to{opacity:1}}
-body{animation:abbaPageFade .8s ease forwards}
 
 /* ---- 0b · SELECTION + hide native cursor when custom is active ---- */
 ::selection{background:rgba(194,130,60,.30);color:#fff}
@@ -1349,13 +1346,16 @@ window.I18N = {
 <script>
 // progress + header
 const prog=document.getElementById('progress'),header=document.getElementById('header');
+let scrollTicking=false;
 function onScroll(){
+  scrollTicking=false;
   const h=document.documentElement,st=h.scrollTop||document.body.scrollTop;
   const sh=(h.scrollHeight-h.clientHeight);
   prog.style.width=(sh>0?(st/sh*100):0)+'%';
   header.classList.toggle('solid',st>60);
 }
-document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+function onScrollTick(){ if(!scrollTicking){ scrollTicking=true; requestAnimationFrame(onScroll); } }
+document.addEventListener('scroll',onScrollTick,{passive:true});onScroll();
 
 // reveal
 const ro=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}});},{threshold:.18});
@@ -1378,12 +1378,15 @@ chapters.forEach(c=>co.observe(c));
 // show index only while in journey
 const jStart=document.getElementById('recorrido');
 const jEnd=document.getElementById('metodo');
+let idxTicking=false;
 function toggleIndex(){
+  idxTicking=false;
   const y=window.scrollY+window.innerHeight*0.5;
   const a=jStart.offsetTop, b=jEnd.offsetTop;
   sindex.classList.toggle('show', y>a && y<b);
 }
-document.addEventListener('scroll',toggleIndex,{passive:true});toggleIndex();
+function toggleIndexTick(){ if(!idxTicking){ idxTicking=true; requestAnimationFrame(toggleIndex); } }
+document.addEventListener('scroll',toggleIndexTick,{passive:true});toggleIndex();
 idxItems.forEach(it=>it.addEventListener('click',()=>{
   chapters[+it.dataset.i].scrollIntoView({behavior:'smooth'});
 }));
@@ -1454,16 +1457,24 @@ window.addEventListener('load',()=>{
 
 // ===== ambient music (YouTube licensed playback; starts on first gesture, mutable) =====
 (function(){
-  var player=null, ready=false, audible=false, userOff=false, started=false;
+  var player=null, ready=false, audible=false, userOff=false, started=false, ytRequested=false, pendingOn=false;
   var sound=document.getElementById('sound'), lbl=sound.querySelector('.lbl'), hint=document.getElementById('soundHint');
-  var tag=document.createElement('script'); tag.src="https://www.youtube.com/iframe_api"; document.head.appendChild(tag);
+
+  function loadYT(){
+    if(ytRequested) return; ytRequested=true;
+    var tag=document.createElement('script'); tag.src="https://www.youtube.com/iframe_api"; document.head.appendChild(tag);
+  }
 
   window.onYouTubeIframeAPIReady=function(){
     player=new YT.Player('yt-audio',{
       videoId:'zQ2C9Jqzd54',
       playerVars:{autoplay:1,mute:1,loop:1,playlist:'zQ2C9Jqzd54',controls:0,playsinline:1,modestbranding:1,rel:0},
       events:{
-        'onReady':function(e){ ready=true; try{e.target.mute();e.target.playVideo();}catch(_ ){} setSoft(); },
+        'onReady':function(e){
+          ready=true;
+          try{e.target.mute();e.target.playVideo();}catch(_ ){}
+          if(pendingOn && !userOff){ enable(); } else { setSoft(); }
+        },
         'onStateChange':function(e){ if(e.data===YT.PlayerState.ENDED){ try{player.seekTo(0);player.playVideo();}catch(_ ){} } }
       }
     });
@@ -1471,13 +1482,13 @@ window.addEventListener('load',()=>{
   function setActive(){ sound.classList.add('playing'); lbl.textContent=T('sound.active'); sound.setAttribute('aria-label',T('sound.activeAria')); }
   function setSoft(){ sound.classList.remove('playing'); lbl.textContent=T('sound.soft'); sound.setAttribute('aria-label',T('sound.softAria')); }
   window.__refreshSoundLabel = function(){ if(audible) setActive(); else setSoft(); };
-  function enable(){ if(!ready||!player) return; try{player.unMute();player.setVolume(55);player.playVideo();}catch(_ ){} audible=true; userOff=false; setActive(); }
-  function disable(){ if(!ready||!player) return; try{player.mute();}catch(_ ){} audible=false; userOff=true; setSoft(); }
+  function enable(){ if(!ready||!player){ pendingOn=true; return; } pendingOn=false; try{player.unMute();player.setVolume(55);player.playVideo();}catch(_ ){} audible=true; userOff=false; setActive(); }
+  function disable(){ pendingOn=false; if(!ready||!player) return; try{player.mute();}catch(_ ){} audible=false; userOff=true; setSoft(); }
 
   function firstGesture(e){
     if(started) return;
     if(e&&e.target&&sound.contains(e.target)) return; // the button handles itself
-    started=true; if(!userOff) enable();
+    started=true; loadYT(); if(!userOff) pendingOn=true;
     window.removeEventListener('pointerdown',firstGesture);
     window.removeEventListener('keydown',firstGesture);
     window.removeEventListener('scroll',firstGesture);
@@ -1488,7 +1499,7 @@ window.addEventListener('load',()=>{
   window.addEventListener('keydown',firstGesture);
   window.addEventListener('scroll',firstGesture,{passive:true});
 
-  function toggle(e){ if(e){e.preventDefault();e.stopPropagation();} started=true; if(audible) disable(); else enable(); }
+  function toggle(e){ if(e){e.preventDefault();e.stopPropagation();} started=true; loadYT(); if(audible) disable(); else enable(); }
   sound.addEventListener('click',toggle);
   sound.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){toggle(e);} });
   setTimeout(function(){ hint.classList.add('show'); setTimeout(function(){hint.classList.remove('show');},4800); },1800);
@@ -1738,7 +1749,9 @@ window.addEventListener('load',()=>{
     });
     var hero=$('.hero');
     var endEl=$('.final')||$('footer');
+    var mbarTicking=false;
     function sync(){
+      mbarTicking=false;
       var afterHero=window.scrollY>(hero?hero.offsetHeight*0.85:400);
       var nearEnd=false;
       if(endEl){ var r=endEl.getBoundingClientRect(); nearEnd=r.top<window.innerHeight*0.9; }
@@ -1746,8 +1759,9 @@ window.addEventListener('load',()=>{
       bar.classList.toggle('show',show);
       document.body.classList.toggle('mbar-shown',show);
     }
-    window.addEventListener('scroll',sync,{passive:true});
-    window.addEventListener('resize',sync,{passive:true});
+    function syncTick(){ if(!mbarTicking){ mbarTicking=true; requestAnimationFrame(sync); } }
+    window.addEventListener('scroll',syncTick,{passive:true});
+    window.addEventListener('resize',syncTick,{passive:true});
     sync();
   });
 
