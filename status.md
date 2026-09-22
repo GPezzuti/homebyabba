@@ -1,10 +1,12 @@
 # LP Barbara — Status
 
-**Última actualización:** 2026-06-22
+**Última actualización:** 2026-09-02 (mega-auditoría OWL)
 
-## Estado: EN PROGRESO
+## Estado: COMPLETO — mantenimiento puntual
 
-### Completado ✅
+Entregado y en producción desde 2026-06-25. Dominio custom conectado 2026-06-27. Fuente de verdad operativa: `CLAUDE.md` (no este archivo).
+
+### Hecho ✅
 - [x] Análisis de assets y template HTML
 - [x] Configuración Lovable MCP (`claude mcp add --transport http lovable`)
 - [x] Compresión de 5 imágenes (7MB → ~300KB c/u)
@@ -13,7 +15,7 @@
 - [x] HTML final: 3.39MB, todas las secciones verificadas
 - [x] Estructura de proyecto creada
 
-### Completado ✅ (continuación)
+### Hecho ✅ (continuación)
 - [x] GitHub repo creado: https://github.com/GPezzuti/homebyabba
 - [x] index.html pushed a GitHub (main branch)
 - [x] Cloudflare Pages deploy: https://homebyabba.gerardopezzuti.workers.dev ✅ LIVE
@@ -30,11 +32,6 @@
 - **GitHub:** https://github.com/GPezzuti/homebyabba
 - **Cloudflare Pages:** conectado a GitHub, auto-deploy en cada push a main
 - **Plataforma:** Cloudflare Pages (static HTML, no build step)
-
-## Flujo de actualización (para cuando llegue la URL del PDF)
-1. Editar `deliverables/index.html` → reemplazar `TODO_REPLACE_WITH_GOOGLE_DRIVE_URL`
-2. Push al repo: `homebyabba-deploy` en scratchpad o directamente en el repo
-3. Cloudflare auto-deploya en ~30 segundos
 
 ## Estado final
 **PROYECTO COMPLETO.** Site live en homebyabba.com. DNS conectado 2026-06-27. QA pendiente (opcional — si Barbara lo pide).
