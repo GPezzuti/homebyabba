@@ -131,7 +131,7 @@ header.solid{background:rgba(20,18,16,.82);backdrop-filter:blur(12px);padding:12
 .sindex{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:90;display:none;flex-direction:column;gap:18px}
 .sindex.show{display:flex}
 .sidx{display:flex;align-items:center;gap:10px;justify-content:flex-end;opacity:.45;transition:.4s;cursor:pointer}
-.sidx .t{font-family:'Manrope';font-weight:600;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;
+.sidx .t{text-shadow:0 1px 10px rgba(0,0,0,.6);font-family:'Manrope';font-weight:600;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;
   color:#EFE7D9;text-align:right;max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .45s ease,opacity .3s}
 .sidx .bar{width:26px;height:2px;background:#EFE7D9;border-radius:2px;transition:.4s}
 .sidx.active{opacity:1}
@@ -523,7 +523,6 @@ a,button,.btn,.plus,.card-head,.sidx,.sound,[role="button"]{
   .card.tiltable{transform:none!important}
   .btn.magnetic{transform:none!important}
   .hero-bg,.chapter-bg,.final-bg{background-position:50% 50%!important}
-  .hero-video{display:none}
   .grain,.method::after,.services::after,.testi::after{display:none}
   .mbar{transition:none}
 }
@@ -707,9 +706,6 @@ footer .fl .btn[data-dlguide].dl-wa::before,footer .fl a[data-dlguide].dl-wa::be
 
 .hero { position: relative; }
 .hero-bg  { z-index: 0; }
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  z-index:1;opacity:0;transition:opacity .9s ease;pointer-events:none}
-.hero-video.ready{opacity:1}
 .hero-inner { position: relative; z-index: 2; }
 
 /* Chapter bg placeholder while lazy-loading */
@@ -1102,7 +1098,6 @@ window.I18N = {
 <!-- HERO -->
 <section class="hero" id="top" aria-labelledby="hero-h">
   <div class="hero-bg"></div>
-  <video class="hero-video" id="heroVideo" poster="assets/images/img6572_web.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
   <div class="hero-inner">
     <span class="eyebrow" data-i18n="hero.eyebrow">Diseño de interiores sensorial</span>
     <h1 id="hero-h" class="serif">Llega a casa y, <span class="it">por fin</span>, respira.</h1>
@@ -1625,32 +1620,6 @@ window.addEventListener('load',()=>{
     window.addEventListener('resize',onScrollPx,{passive:true});
     update();
   });
-
-  /* 4b — HERO VIDEO: desktop + fast connection only, paused off-screen */
-  safe(function(){
-    var v = document.getElementById('heroVideo');
-    if(!v) return;
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var conn = navigator.connection;
-    var slow = conn && (conn.saveData || /2g/.test(conn.effectiveType||''));
-    if(reduce || slow || !window.matchMedia('(min-width:769px)').matches) return;
-    var s1=document.createElement('source'); s1.type='video/webm'; s1.src='assets/video/hero-loop.webm';
-    var s2=document.createElement('source'); s2.type='video/mp4'; s2.src='assets/video/hero-loop.mp4';
-    v.appendChild(s1); v.appendChild(s2);
-    v.addEventListener('canplay', function(){ v.classList.add('ready'); }, {once:true});
-    v.load();
-    v.play().catch(function(){});
-    var hero = document.getElementById('top');
-    if(hero && 'IntersectionObserver' in window){
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting) v.play().catch(function(){}); else v.pause();
-        });
-      }, {threshold:0.1});
-      io.observe(hero);
-    }
-  });
-
 
   /* 6 — TESTIMONIALS (before #guia) */
   safe(function(){
