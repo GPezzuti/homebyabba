@@ -1,0 +1,12 @@
+# Archivos internos de gestión OWL — no son parte del sitio del cliente
+CLAUDE.md
+brief.md
+decisions.md
+.gstack/
+.serena/
+_archive/
+
+# Copia de trabajo interna — index.html (raíz) es el único archivo que debe
+# desplegarse en Cloudflare Pages. deliverables/index.html duplicado aquí
+# quedaba público en /deliverables/index.html (SEO audit 2026-09-22, F13/F18/F06).
+deliverables/
