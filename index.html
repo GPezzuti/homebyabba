@@ -70,16 +70,16 @@ header.solid{background:rgba(20,18,16,.82);backdrop-filter:blur(12px);padding:12
   transform:scale(1.08);animation:kb 18s ease-out forwards}
 @keyframes kb{to{transform:scale(1)}}
 .hero::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(15,13,11,.86) 0%,rgba(15,13,11,.3) 42%,rgba(15,13,11,.72) 100%)}
+  background:linear-gradient(to top,rgba(15,13,11,.86) 0%,rgba(15,13,11,.28) 42%,rgba(15,13,11,.45) 100%)}
 .hero-inner{position:relative;z-index:3;width:100%;padding:0 7vw 9vh}
 .hero h1{font-family:'Fraunces';font-weight:340;font-size:clamp(2.7rem,7.2vw,6rem);line-height:1.02;
-  letter-spacing:-.01em;max-width:14ch;margin:.5rem 0 1.1rem;text-shadow:0 2px 24px rgba(0,0,0,.4)}
+  letter-spacing:-.01em;max-width:14ch;margin:.5rem 0 1.1rem}
 .hero h1 .it{color:var(--amber-soft)}
-.hero p{font-size:clamp(1rem,1.7vw,1.22rem);max-width:46ch;color:#EAE3D7;font-weight:300;text-shadow:0 1px 16px rgba(0,0,0,.4)}
+.hero p{font-size:clamp(1rem,1.7vw,1.22rem);max-width:46ch;color:#EAE3D7;font-weight:300}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:2rem}
 .scrollcue{position:absolute;z-index:3;bottom:26px;left:50%;transform:translateX(-50%);
   font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:#D9D0C2;display:flex;flex-direction:column;
-  align-items:center;gap:8px;opacity:.85;text-shadow:0 1px 14px rgba(0,0,0,.6)}
+  align-items:center;gap:8px;opacity:.85}
 .scrollcue .dot{width:1px;height:34px;background:linear-gradient(var(--amber),transparent);animation:cue 2s infinite}
 @keyframes cue{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
 
@@ -115,23 +115,23 @@ header.solid{background:rgba(20,18,16,.82);backdrop-filter:blur(12px);padding:12
   transition:transform 2.4s cubic-bezier(.2,.7,.2,1)}
 .chapter.in .chapter-bg{transform:scale(1)}
 .chapter::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(15,13,11,.9) 2%,rgba(15,13,11,.18) 45%,rgba(15,13,11,.78) 100%)}
+  background:linear-gradient(to top,rgba(15,13,11,.9) 2%,rgba(15,13,11,.15) 45%,rgba(15,13,11,.5) 100%)}
 .chapter-inner{position:relative;z-index:3;width:100%;padding:0 7vw 12vh;max-width:1180px;margin:0 auto}
 .chapter .num{font-family:'Fraunces';font-weight:300;font-size:clamp(2.4rem,6vw,4.2rem);color:var(--amber-soft);
-  line-height:1;opacity:.0;transform:translateY(20px);transition:.9s cubic-bezier(.2,.7,.2,1);text-shadow:0 2px 20px rgba(0,0,0,.45)}
+  line-height:1;opacity:.0;transform:translateY(20px);transition:.9s cubic-bezier(.2,.7,.2,1)}
 .chapter.in .num{opacity:.9;transform:none}
 .chapter .clabel{font-family:'Manrope';font-weight:600;letter-spacing:.3em;text-transform:uppercase;
-  font-size:.72rem;color:#EAE0D0;margin:14px 0 12px;opacity:0;transition:.9s cubic-bezier(.2,.7,.2,1) .15s;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+  font-size:.72rem;color:#EAE0D0;margin:14px 0 12px;opacity:0;transition:.9s cubic-bezier(.2,.7,.2,1) .15s}
 .chapter.in .clabel{opacity:1}
 .chapter h3{font-family:'Fraunces';font-weight:330;font-size:clamp(1.6rem,3.6vw,2.8rem);line-height:1.18;
-  max-width:22ch;color:#FBF7EF;opacity:0;transform:translateY(22px);transition:1s cubic-bezier(.2,.7,.2,1) .25s;text-shadow:0 2px 20px rgba(0,0,0,.45)}
+  max-width:22ch;color:#FBF7EF;opacity:0;transform:translateY(22px);transition:1s cubic-bezier(.2,.7,.2,1) .25s}
 .chapter.in h3{opacity:1;transform:none}
 
 /* sensory index */
 .sindex{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:90;display:none;flex-direction:column;gap:18px}
 .sindex.show{display:flex}
 .sidx{display:flex;align-items:center;gap:10px;justify-content:flex-end;opacity:.45;transition:.4s;cursor:pointer}
-.sidx .t{text-shadow:0 1px 10px rgba(0,0,0,.6);font-family:'Manrope';font-weight:600;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;
+.sidx .t{font-family:'Manrope';font-weight:600;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;
   color:#EFE7D9;text-align:right;max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .45s ease,opacity .3s}
 .sidx .bar{width:26px;height:2px;background:#EFE7D9;border-radius:2px;transition:.4s}
 .sidx.active{opacity:1}
