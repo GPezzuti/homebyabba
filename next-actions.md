@@ -1,6 +1,6 @@
-# LP Barbara — Next Actions
+# LP Barbara: Next Actions
 
-**Actualizado 2026-10-21:** dominio custom conectado desde 2026-06-27, ya no es pendiente. Proyecto en mantenimiento puntual — ver `CLAUDE.md`.
+**Actualizado 2026-10-21:** dominio custom conectado desde 2026-06-27, ya no es pendiente. Proyecto en mantenimiento puntual, ver `CLAUDE.md`.
 
 ## QA final (opcional, solo si Barbara lo solicita)
 - [ ] Abrir URL en Chrome y mobile
