@@ -1,0 +1,20 @@
+# Archivos que NO se publican en Cloudflare Workers (static assets).
+# El directorio de assets es la raiz del repo, asi que todo lo no listado aqui queda publico.
+.git
+.gitignore
+.assetsignore
+wrangler.jsonc
+node_modules
+.wrangler
+*.md
+docs
+deliverables
+context
+references
+_archive
+.claude
+.codex
+.gstack
+.serena
+.dev.vars*
+.env*
