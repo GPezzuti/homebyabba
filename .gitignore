@@ -5,8 +5,20 @@ decisions.md
 .gstack/
 .serena/
 _archive/
+AGENTS.md
+.codex/
+.claude/
+context/
+references/
 
 # Copia de trabajo interna — index.html (raíz) es el único archivo que debe
-# desplegarse en Cloudflare Pages. deliverables/index.html duplicado aquí
+# desplegarse en Cloudflare Workers (static assets). deliverables/index.html duplicado aquí
 # quedaba público en /deliverables/index.html (SEO audit 2026-09-22, F13/F18/F06).
 deliverables/
+
+# Cloudflare / wrangler
+.wrangler/
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
