@@ -22,3 +22,7 @@ deliverables/
 !.dev.vars.example
 .env*
 !.env.example
+
+# Docs internos del proyecto (no deben publicarse ni estar en el repo publico)
+status.md
+next-actions.md
